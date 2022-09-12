@@ -1,17 +1,18 @@
 # Python Library Evaluation: AIF360
 
-## Install
+## Setup
 
+To install the latest stable version from PyPI, run:
 ```python
-# Select a fair algorithm and train
-from fairpy import model
-
-clf = model(*args, **kwargs)
-clf.fit(X_train)
-clf.predict(X_test)
+pip install aif360
 ```
-
+Some algorithms require additional dependencies,for complete functionality, run
+```python
+pip install 'aif360[all]'
+```
 ## Dataset
+
+## Metric
 
 
 ## Algorithms
@@ -21,3 +22,5 @@ clf.predict(X_test)
 
 
 ## Problems
+1. Import Issue
+2. 
