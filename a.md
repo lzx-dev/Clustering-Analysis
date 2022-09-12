@@ -109,11 +109,32 @@ Note: detectors function not available in current api version
 
 ## Algorithms
 Apply classification Algorithms to BinaryLabel Dataset
+* preprocessing
+```python
+from aif360.algorithms.preprocessing import Reweighing
+privileged_groups = [{"attribute_name": 1}]
+unprivileged_groups = [{"attribute_name": 0}]
+RW = Reweighing(unprivileged_groups=unprivileged_groups,
+                privileged_groups=privileged_groups)
+dataset_transf = RW.fit_transform(dataset_orig)
+```
+* inprocessing
+```python
+from aif360.algorithms.inprocessing import PrejudiceRemover
+sens_attr = 
+model = PrejudiceRemover(sensitive_attr=sens_attr, eta=25.0)
+````
+
+*postprocessing
+
 
 
 
 
 ## Metric
+
+
+## Expainer
 
 
 
@@ -124,10 +145,16 @@ Apply classification Algorithms to BinaryLabel Dataset
 
 ## Problems
 * uncoordinate
-In data type initilization, standardDataset label name parameter is string: Name of the label column in df.
-BinaryLabelDataset label name parameter is (list(str)): Names describing each label.
 
-Not necessery to 
+In data type initilization, standardDataset label name parameter is string: Name of the label column in df. BinaryLabelDataset label name parameter is (list(str)): Names describing each label.
+
+* redundent information input 
+
+privillaged and unprivillaged information needs to be put in both standardDataset and processing algorithm/metric
+
+when using standardDataset, set privillaged and unprivillaged as default would be better
+
 *  Import Error
-*
+
+
  
