@@ -51,6 +51,13 @@ from aif360.datasets impor MEPSDataset21
 ```
 
 #### Transform external data source to defined class
+* Inherit BinaryLabelDataset
+```python
+
+```
+
+* Inherit StandardDataset
+"It is not strictly necessary to inherit StandardDataset when adding custom datasets but it may be useful."
 ```python
 import pandas as pd
 from aif360.datasets import StandardDataset
@@ -82,12 +89,14 @@ scanner.scan(ad_conversion_dataset[features_4_scanning],
 or
 A Metric for the bias scan scoring and scanning methods that uses the ClassificationMetric abstraction.
 ```python
-from aif360.metrics import MDSSClassificationMetric
+from aif360.metrics.mdss_classification_metric import MDSSClassificationMetric 
 ```
 
 Note: detectors function not available in current api version
 
 ## Algorithms
+Apply classification Algorithms to BinaryLabel Dataset
+
 
 
 
@@ -101,5 +110,5 @@ Note: detectors function not available in current api version
 
 
 ## Problems
-1. Import Error
-2. 
+*  Import Error
+ 
