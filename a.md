@@ -35,6 +35,20 @@ AIF360 defined its own data class type.
  * datasets.StandardDataset is base class for every BinaryLabelDataset provided out of the box by aif360. 
  * datasets.RegressionDataset is base class for regression datasets.
 
+All datasets provided:
+```python
+#Regression Dataset
+from aif360.datasets import LawSchoolGPADataset 
+#Binary Label Dataset
+from aif360.datasets import BankDataset
+from aif360.datasets import CompasDataset
+from aif360.datasets import AdultDataset
+from aif360.datasets import GermanDataset
+#Binary Label and Panel Dataset
+from aif360.datasets impor MEPSDataset19
+from aif360.datasets impor MEPSDataset20
+from aif360.datasets impor MEPSDataset21
+```
 
 
 ## Metric
@@ -47,5 +61,5 @@ AIF360 defined its own data class type.
 
 
 ## Problems
-1. Import Issue
+1. Import Error
 2. 
