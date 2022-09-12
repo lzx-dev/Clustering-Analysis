@@ -50,11 +50,31 @@ from aif360.datasets impor MEPSDataset20
 from aif360.datasets impor MEPSDataset21
 ```
 
+#### Transform external data source to defined class
+```python
+import pandas as pd
+from aif360.datasets import StandardDataset
+## import external data
+ad_conversion_dataset = pd.read_csv('ad_campaign_data.csv')
+
+ad_standard_dataset_pred = StandardDataset(df=ad_conversion_dataset, label_name= 'predicted_conversion', favorable_classes= [1],
+                            scores_name= 'predicted_probability', protected_attribute_names= ['homeowner'], privileged_classes= [[0]] ,
+                            categorical_features= ['parents','gender', 'college_educated','area','income', 'age'], features_to_keep=    
+                            ['gender', 'age', 'income', 'area', 'college_educated', 'homeowner','parents', 'predicted_probability'])
+
+```
+
+
+
+
+## Algorithms
+
+
 
 ## Metric
 
 
-## Algorithms
+
 
 
 ## Scikit-learn compatible
