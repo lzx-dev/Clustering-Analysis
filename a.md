@@ -29,7 +29,11 @@ pip install --editable '.[all]'
 ```
 
 ## Dataset
-
+AIF360 defined its own data class type.
+ * datasets.StructuredDataset is base class for all structured datasets.
+ * datasets.BinaryLabelDataset is base class for all structured datasets with binary labels.
+ * datasets.StandardDataset is base class for every BinaryLabelDataset provided out of the box by aif360. 
+ * datasets.RegressionDataset is base class for regression datasets.
 
 
 
