@@ -112,8 +112,8 @@ Apply classification Algorithms to BinaryLabel Dataset
 * preprocessing
 ```python
 from aif360.algorithms.preprocessing import Reweighing
-privileged_groups = [{"attribute_name": 1}]
-unprivileged_groups = [{"attribute_name": 0}]
+privileged_groups = [{"attribute_name": privileged value}]
+unprivileged_groups = [{"attribute_name": unprevileged value}]
 RW = Reweighing(unprivileged_groups=unprivileged_groups,
                 privileged_groups=privileged_groups)
 dataset_transf = RW.fit_transform(dataset_orig)
@@ -121,15 +121,17 @@ dataset_transf = RW.fit_transform(dataset_orig)
 * inprocessing
 ```python
 from aif360.algorithms.inprocessing import PrejudiceRemover
-sens_attr = 
+sens_attr = "sens_attr_name"
+#eta (double, optional) – fairness penalty parameter
+#sensitive_attr (str, optional) – name of protected attribute
 model = PrejudiceRemover(sensitive_attr=sens_attr, eta=25.0)
+model.fit(dataset)
 ````
 
-*postprocessing
+* postprocessing
+```python
 
-
-
-
+```
 
 ## Metric
 
