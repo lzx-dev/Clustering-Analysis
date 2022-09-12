@@ -123,8 +123,9 @@ Apply classification Algorithms to BinaryLabel Dataset
 
 
 ## Problems
-* AIF360 document points out that it is not necessery to inherit StandardDataset when adding custom datasets, 
-but BinaryLabelDataset can not be initilized with categorical columns in custom datasets.
+* uncoordinate
+In data type initilization, standardDataset label name parameter is string: Name of the label column in df.
+BinaryLabelDataset label name parameter is (list(str)): Names describing each label.
 
 Not necessery to 
 *  Import Error
