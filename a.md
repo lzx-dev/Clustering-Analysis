@@ -1,16 +1,36 @@
 # Python Library Evaluation: AIF360
 
 ## Setup
+Conda is recommended for all configurations though Virtualenv, to create a new Python 3.7 environment, run:
+```python
+conda create --name aif360 python=3.7
+conda activate aif360
+```
 
+#### Pip Installation
 To install the latest stable version from PyPI, run:
 ```python
 pip install aif360
 ```
-Some algorithms require additional dependencies,for complete functionality, run
+Some algorithms require additional dependencies, for complete functionality, run:
 ```python
 pip install 'aif360[all]'
 ```
+
+AIF360 provided 8 common dataset, must go through Manual Installation to import them.
+#### Manual Installation
+Clone the latest version of this repository
+```python
+git clone https://github.com/Trusted-AI/AIF360
+```
+download the datasets in https://github.com/Trusted-AI/AIF360/tree/master/aif360/data and place them in their respective folders. Then, navigate to the root directory of the project and run:
+```python
+pip install --editable '.[all]'
+```
+
 ## Dataset
+
+
 
 ## Metric
 
