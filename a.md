@@ -51,23 +51,36 @@ from aif360.datasets impor MEPSDataset21
 ```
 
 #### Transform external data source to defined class
-* Inherit BinaryLabelDataset
-```python
-
-```
-
 * Inherit StandardDataset
 "It is not strictly necessary to inherit StandardDataset when adding custom datasets but it may be useful."
+
+This class will go through a standard preprocessing routine which:
+- (optional) Performs some dataset-specific preprocessing (e.g. renaming columns/values, handling missing data).
+- Drops unrequested columns (see features_to_keep and features_to_drop for details).
+- Drops rows with NA values.
+- Creates a one-hot encoding of the categorical variables.
+- Maps protected attributes to binary privileged/unprivileged values (1/0).
+- Maps labels to binary favorable/unfavorable labels (1/0).
+
 ```python
 import pandas as pd
 from aif360.datasets import StandardDataset
 ## import external data
 ad_conversion_dataset = pd.read_csv('ad_campaign_data.csv')
 ## transform to StandardDataset type
-ad_standard_dataset_pred = StandardDataset(df=ad_conversion_dataset, label_name= 'predicted_conversion', favorable_classes= [1],
-                            scores_name= 'predicted_probability', protected_attribute_names= ['homeowner'], privileged_classes= [[0]] ,
+ad_standard_dataset = StandardDataset(df=ad_conversion_dataset, label_name= 'true_conversion', favorable_classes= [1],
+                            protected_attribute_names= ['homeowner'], privileged_classes= [[0]] ,
                             categorical_features= ['parents','gender', 'college_educated','area','income', 'age'], features_to_keep=    
                             ['gender', 'age', 'income', 'area', 'college_educated', 'homeowner','parents', 'predicted_probability'])
+```
+
+* Inherit BinaryLabelDataset
+To inherit Binarylabeldataset, we need to preprocess external dataset before initilize the class
+```python
+ad_binary = BinaryLabelDataset(df= ad_conversion_dataset, 
+                               label_names = 'true_conversion',
+                               protected_attribute_names = ['homeowner'],
+                               favorable_label = 1, unfavorable_label = 0)
 ```
 
 ## Detectors
@@ -110,5 +123,10 @@ Apply classification Algorithms to BinaryLabel Dataset
 
 
 ## Problems
+* AIF360 document points out that it is not necessery to inherit StandardDataset when adding custom datasets, 
+but BinaryLabelDataset can not be initilized with categorical columns in custom datasets.
+
+Not necessery to 
 *  Import Error
+*
  
