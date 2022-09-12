@@ -56,16 +56,36 @@ import pandas as pd
 from aif360.datasets import StandardDataset
 ## import external data
 ad_conversion_dataset = pd.read_csv('ad_campaign_data.csv')
-
+## transform to StandardDataset type
 ad_standard_dataset_pred = StandardDataset(df=ad_conversion_dataset, label_name= 'predicted_conversion', favorable_classes= [1],
                             scores_name= 'predicted_probability', protected_attribute_names= ['homeowner'], privileged_classes= [[0]] ,
                             categorical_features= ['parents','gender', 'college_educated','area','income', 'age'], features_to_keep=    
                             ['gender', 'age', 'income', 'area', 'college_educated', 'homeowner','parents', 'predicted_probability'])
-
 ```
 
+## Detectors
+Multi dimensional subset scan evaluation for automated identification of subgroups that have predictive bias.
+```python
+from aif360.detectors.mdss.ScoringFunctions import Bernoulli
+from aif360.detectors.mdss.MDSS import MDSS
 
+scoring_function = Bernoulli(direction='negative')
+scanner = MDSS(scoring_function)
+scanner.scan(ad_conversion_dataset[features_4_scanning],
+              expectations = ad_conversion_dataset['predicted_conversion'],
+              outcomes = ad_conversion_dataset['true_conversion'],
+              penalty = 1,
+              num_iters = 1,
+              verbose = False)
 
+```
+or
+A Metric for the bias scan scoring and scanning methods that uses the ClassificationMetric abstraction.
+```python
+from aif360.metrics import MDSSClassificationMetric
+```
+
+Note: detectors function not available in current api version
 
 ## Algorithms
 
