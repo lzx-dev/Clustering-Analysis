@@ -130,13 +130,53 @@ model.fit(dataset)
 
 * postprocessing
 ```python
+from aif360.algorithms.postprocessing import RejectOptionClassification
+#Reject option classification is a postprocessing technique that gives favorable outcomes 
+#to unpriviliged groups and unfavorable outcomes to priviliged groups in a confidence band around 
+#the decision boundary with the highest uncertainty
+
+ROC = RejectOptionClassification(unprivileged_groups=unprivileged_groups,
+                                 privileged_groups=privileged_groups,
+                                            low_class_thresh=0.01, high_class_thresh=0.99,
+                                            num_class_thresh=100, num_ROC_margin=50,
+                                            metric_name=metric_name,
+                                            metric_ub=metric_ub, metric_lb=metric_lb)
+
+dataset_transf_pred_valid = ROC.fit_predict(dataset_orig_valid, dataset_pred_valid)
 
 ```
 
 ## Metric
+- metric for binary label dataset
+```python
+from aif360.metrics import BinaryLabelDatasetMetric
+
+privileged_groups = [{"attribute_name": privileged value}]
+unprivileged_groups = [{"attribute_name": unprevileged value}]
+
+metric = BinaryLabelDatasetMetric(binary_dataset, 
+                          unprivileged_groups=unprivileged_groups, 
+                          privileged_groups=privileged_groups)                      
+metric.disparate_impact()
+```
+- metric for computing based on two BinaryLabelDatasets
+```python
+from aif360.metrics import ClassificationMetric
+
+metric = ClassificationMetric(standard_dataset, standard_dataset_pred, 
+                      unprivileged_groups=unprivileged_groups,
+                      privileged_groups=privileged_groups )            
+metric.average_odds_difference()
+metric.accuracy()
+```
+
 
 
 ## Expainer
+Class for explaining metric values with text
+```python
+MetricTextExplainer(metric).disparate_impact()
+```
 
 
 
@@ -149,6 +189,7 @@ model.fit(dataset)
 * uncoordinate
 
 In data type initilization, standardDataset label name parameter is string: Name of the label column in df. BinaryLabelDataset label name parameter is (list(str)): Names describing each label.
+Favorbale class
 
 * redundent information input 
 
