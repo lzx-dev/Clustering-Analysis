@@ -78,7 +78,7 @@ ad_standard_dataset = StandardDataset(df=ad_conversion_dataset, label_name= 'tru
 To inherit Binarylabeldataset, we need to preprocess external dataset before initilize the class
 ```python
 ad_binary = BinaryLabelDataset(df= ad_conversion_dataset, 
-                               label_names = 'true_conversion',
+                               label_names = ['true_conversion'],
                                protected_attribute_names = ['homeowner'],
                                favorable_label = 1, unfavorable_label = 0)
 ```
@@ -105,7 +105,7 @@ A Metric for the bias scan scoring and scanning methods that uses the Classifica
 from aif360.metrics.mdss_classification_metric import MDSSClassificationMetric 
 ```
 
-Note: detectors function not available in current api version
+Note: import detectors will raise error
 
 ## Algorithms
 Apply classification Algorithms to BinaryLabel Dataset
@@ -121,6 +121,8 @@ dataset_transf = RW.fit_transform(dataset_orig)
 * inprocessing
 ```python
 from aif360.algorithms.inprocessing import PrejudiceRemover
+#Prejudice remover is an in-processing technique that adds 
+#a discrimination-aware regularization term to the learning objective
 sens_attr = "sens_attr_name"
 #eta (double, optional) – fairness penalty parameter
 #sensitive_attr (str, optional) – name of protected attribute
@@ -135,6 +137,10 @@ from aif360.algorithms.postprocessing import RejectOptionClassification
 #to unpriviliged groups and unfavorable outcomes to priviliged groups in a confidence band around 
 #the decision boundary with the highest uncertainty
 
+# Upper and lower bound on the fairness metric used
+metric_ub = 0.05
+metric_lb = -0.05
+
 ROC = RejectOptionClassification(unprivileged_groups=unprivileged_groups,
                                  privileged_groups=privileged_groups,
                                             low_class_thresh=0.01, high_class_thresh=0.99,
@@ -142,9 +148,12 @@ ROC = RejectOptionClassification(unprivileged_groups=unprivileged_groups,
                                             metric_name=metric_name,
                                             metric_ub=metric_ub, metric_lb=metric_lb)
 
-dataset_transf_pred_valid = ROC.fit_predict(dataset_orig_valid, dataset_pred_valid)
+ROC.fit(dataset_orig, dataset_pred)
 
+ROC.classification_threshold
+ROC.ROC_margin
 ```
+The ROC method has estimated that the optimal classification threshold and the margin. This means that to mitigate bias, for instances with a predicted_probability between threshold-margin and threshold+margin, if they belong to the unprivileged group, they will be assigned a favorable outcome . However, if they belong to the privileged group, they will be assigned an unfavorable outcome.
 
 ## Metric
 - metric for binary label dataset
@@ -163,13 +172,22 @@ metric.disparate_impact()
 ```python
 from aif360.metrics import ClassificationMetric
 
-metric = ClassificationMetric(standard_dataset, standard_dataset_pred, 
+metric = ClassificationMetric(binary_dataset, binary_dataset_pred, 
                       unprivileged_groups=unprivileged_groups,
                       privileged_groups=privileged_groups )            
 metric.average_odds_difference()
 metric.accuracy()
 ```
-
+- metrics for computing based on two StructuredDatasets.
+```python
+from aif360.metrics.sample_distortion_metric import SampleDistortionMetric
+metric = SampleDistortionMetric(structure_dataset, distorted_dataset,
+                                  unprivileged_groups=unprivileged_groups,
+                                  privileged_groups=privileged_groups)
+metric.average_euclidean_distance()
+metric.mean_euclidean_distance_difference()
+```
+      
 
 
 ## Expainer
@@ -179,10 +197,7 @@ MetricTextExplainer(metric).disparate_impact()
 ```
 
 
-
-
-
-## Scikit-learn compatible
+## Scikit-learn compatible version
 
 
 ## Problems
