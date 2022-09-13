@@ -197,7 +197,50 @@ MetricTextExplainer(metric).disparate_impact()
 ```
 
 
-## Scikit-learn compatible version
+# Scikit-learn compatible version
+The dataset format for aif360.sklearn is a pandas.DataFrame with protected attributes in the index.
+##### dataset 
+- aif360.sklearn.datasets.standardize_dataset
+
+separate data, targets, and possibly sample weights and populate protected attributes as sample properties
+```python
+import pandas as pd
+from aif360.sklearn.datasets.utils import standardize_dataset
+df = pd.DataFrame([[0.5, 1, 1, 0.75], [-0.5, 0, 0, 0.25]],
+                   columns=['X', 'y', 'Z', 'w'])
+x,y  = standardize_dataset(df, prot_attr='Z', target='y')
+## note: x and y are dataframe with protected attribute in index
+```
+- load dataset from aif360
+```python
+from aif360.sklearn.datasets.openml_datasets import fetch_adult
+data = fetch_adult()
+#Tuple containing X, y, and sample_weights for the Adult dataset accessible by index or name.
+x = data[0]
+y = data[1]
+sample_weight = data[2]
+```
+#### fairness metric
+```python
+#aif360.sklearn.metrics.statistical_parity_difference
+#(y_true, y_pred=None, *, prot_attr=None, priv_group=1, pos_label=1, sample_weight=None)
+from aif360.sklearn.metrics import statistical_parity_difference
+
+## if prot_attr is none, all protected attributes in y_true are used
+statistical_parity_difference(y_true, y_pred)
+## return float: statistical parity difference
+
+```
+
+
+
+#### algorithm
+```python
+from aif360.sklearn.preprocessing.reweighing import Rewighing
+## default input is none, meaning all protected attributes from the dataset are used
+rw = Reweighing(["prot_attr_name"])
+rw.fit_transform(x, y)
+```
 
 
 ## Problems
@@ -213,6 +256,8 @@ privillaged and unprivillaged information needs to be put in both standardDatase
 when using standardDataset, set privillaged and unprivillaged as default would be better
 
 *  Import Error
+
+
 
 
  
