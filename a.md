@@ -39,24 +39,18 @@ pip install --editable '.[all]'
 ```
 #### 1.3 Evaluation
 AIF360 provided 8 datasets in pre-defined class type for users to import, however, users must go through manual Installation to import them which reuqires open multiple links to download original files. Most tutorial notebooks provided in AIF360 github are also using pre-defined datasets. <br>
-Users prefer to use tutorial notebooks to learn toolkits and they want to install toolkits easy and fast. In AIF360, getting access of running tutorial notebooks by manual Installation woulf be a problem here.
-
-
-
-
-
-
+Users prefer to use tutorial notebooks to learn toolkits and they want an easy and fast installation of toolkits . In AIF360, getting access of running tutorial notebooks by manual Installation would be a problem here.
 
 
 ## 2 Dataset
+#### 2.1 Datasets provided out of the box by aif360
 AIF360 defined its own data class type.
  * datasets.StructuredDataset is base class for all structured datasets.
  * datasets.BinaryLabelDataset is base class for all structured datasets with binary labels.
  * datasets.StandardDataset is base class for every BinaryLabelDataset provided out of the box by aif360. 
  * datasets.RegressionDataset is base class for regression datasets.
-
-All datasets provided:
 ```python
+##All datasets provided
 #Regression Dataset
 from aif360.datasets import LawSchoolGPADataset 
 #Binary Label Dataset
@@ -70,11 +64,9 @@ from aif360.datasets impor MEPSDataset20
 from aif360.datasets impor MEPSDataset21
 ```
 
-#### Transform external data source to defined class
-* Inherit StandardDataset
-"It is not strictly necessary to inherit StandardDataset when adding custom datasets but it may be useful."
-
-This class will go through a standard preprocessing routine which:
+#### 2.2 Transform external data source to defined class
+* Inherit StandardDataset<br>
+This class will go through a standard preprocessing routine:
 - (optional) Performs some dataset-specific preprocessing (e.g. renaming columns/values, handling missing data).
 - Drops unrequested columns (see features_to_keep and features_to_drop for details).
 - Drops rows with NA values.
@@ -94,16 +86,22 @@ ad_standard_dataset = StandardDataset(df=ad_conversion_dataset, label_name= 'tru
                             ['gender', 'age', 'income', 'area', 'college_educated', 'homeowner','parents', 'predicted_probability'])
 ```
 
-* Inherit BinaryLabelDataset
-To inherit Binarylabeldataset, we need to preprocess external dataset before initilize the class
+* Inherit BinaryLabelDataset <br>
 ```python
+#To inherit Binarylabeldataset, we need to preprocess external dataset before initilize the class
 ad_binary = BinaryLabelDataset(df= ad_conversion_dataset, 
                                label_names = ['true_conversion'],
                                protected_attribute_names = ['homeowner'],
                                favorable_label = 1, unfavorable_label = 0)
 ```
+#### 2.3 Evaluation
+Datasets provided by AIF360 have defined which attributes are protected and what values privileged group and unprivileged group contains. 
 
-## 2.Detectors
+
+
+
+## 3 Detectors
+#### 3.1 Bias detector
 Multi dimensional subset scan evaluation for automated identification of subgroups that have predictive bias.
 ```python
 from aif360.detectors.mdss.ScoringFunctions import Bernoulli
@@ -119,7 +117,7 @@ scanner.scan(ad_conversion_dataset[features_4_scanning],
               verbose = False)
 
 ```
-or
+#### 3.2 MDSS metric
 A Metric for the bias scan scoring and scanning methods that uses the ClassificationMetric abstraction.
 ```python
 from aif360.metrics.mdss_classification_metric import MDSSClassificationMetric 
