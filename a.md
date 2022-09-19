@@ -1,5 +1,14 @@
 # Python Library Evaluation: AIF360
 
+AIF360. Developed by IBM, AI Fairness 360 (AIF360)1
+is an extensible open source toolkit for detecting, understanding, and mitigating algorithmic biases. IBM notes
+that the toolkit should only be used in a very limited setting: allocation or risk assessment problems with well-defined
+protected attributes
+
+This report will go through AIF360 setup, dataset, bias detectos, algorithms, metric and Scikit-learn compatible version.
+
+
+
 ## Setup
 Conda is recommended for all configurations though Virtualenv, to create a new Python 3.7 environment, run:
 ```python
