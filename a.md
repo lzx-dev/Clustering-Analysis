@@ -1,41 +1,52 @@
 # Python Library Evaluation: AIF360
 
-AIF360. Developed by IBM, AI Fairness 360 (AIF360)1
+AIF360 Developed by IBM, AI Fairness 360 (AIF360)
 is an extensible open source toolkit for detecting, understanding, and mitigating algorithmic biases. IBM notes
 that the toolkit should only be used in a very limited setting: allocation or risk assessment problems with well-defined
 protected attributes
 
-This report will go through AIF360 setup, dataset, bias detectos, algorithms, metric and Scikit-learn compatible version.
+This report will go through AIF360 setup, dataset, bias detectos, algorithms, metric and Scikit-learn compatible version. I evaluated this libarary based on four criteria from the user's perspective: <br>
+
+1.The abilities to use the toolkit to learn more about ML fairness and the landscape of current ML fairness research <br>
+2.Toolkits should be rapidly on-boarding  due to workplace time constraints <br>
+3.The abilities to integrate the toolkits into existing ML working pipeline <br>
+4.Using toolkits as code repositories to implement state-of-the-art or domain specific ML fairness algorithms. <br>
 
 
 
-## Setup
+
+## 1.Setup
 Conda is recommended for all configurations though Virtualenv, to create a new Python 3.7 environment, run:
 ```python
 conda create --name aif360 python=3.7
 conda activate aif360
 ```
 
-#### Pip Installation
+#### 1.1Pip Installation
 To install the latest stable version from PyPI, run:
 ```python
 pip install aif360
-```
-Some algorithms require additional dependencies, for complete functionality, run:
-```python
+
+#Some algorithms require additional dependencies, for complete functionality, run:
 pip install 'aif360[all]'
 ```
 
 AIF360 provided 8 common dataset, must go through Manual Installation to import them.
-#### Manual Installation
-Clone the latest version of this repository
+#### 1.2 Manual Installation
+
 ```python
+#Clone the latest version of this repository
 git clone https://github.com/Trusted-AI/AIF360
-```
-download the datasets in https://github.com/Trusted-AI/AIF360/tree/master/aif360/data and place them in their respective folders. Then, navigate to the root directory of the project and run:
-```python
+#download the datasets in https://github.com/Trusted-AI/AIF360/tree/master/aif360/data
+#place them in their respective folders. Then, navigate to the #root directory of the project and run:
 pip install --editable '.[all]'
 ```
+
+
+
+
+
+
 
 ## Dataset
 AIF360 defined its own data class type.
