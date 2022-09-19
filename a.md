@@ -5,7 +5,7 @@ is an extensible open source toolkit for detecting, understanding, and mitigatin
 that the toolkit should only be used in a very limited setting: allocation or risk assessment problems with well-defined
 protected attributes
 
-This report will go through AIF360 setup, dataset, bias detectos, algorithms, metric and Scikit-learn compatible version. I evaluated this libarary based on four criteria from the user's perspective: <br>
+This report will go through AIF360 setup, dataset, bias detectos, algorithms, metric, Scikit-learn compatible version, tutorial videos and community. I evaluated this libarary based on four criteria from the user's perspective: <br>
 
 1.The abilities to use the toolkit to learn more about ML fairness and the landscape of current ML fairness research <br>
 2.Toolkits should be rapidly on-boarding due to workplace time constraints <br>
@@ -95,9 +95,9 @@ ad_binary = BinaryLabelDataset(df= ad_conversion_dataset,
                                favorable_label = 1, unfavorable_label = 0)
 ```
 #### 2.3 Evaluation
-Datasets provided by AIF360 have defined which attributes are protected and what values privileged group and unprivileged group contains. 
-
-
+Datasets provided by AIF360 have defined which attributes are protected and what values privileged group or unprivileged group contains, but in the libarary documentation, there is not detailed information about how the data was collected and how the features were being defined. <br>
+Context documents like Datasheets could better scaffold an user’s process of issue discovery, understanding, and
+ethical decision-making around ML training datasets.
 
 
 ## 3 Detectors
@@ -123,10 +123,11 @@ A Metric for the bias scan scoring and scanning methods that uses the Classifica
 from aif360.metrics.mdss_classification_metric import MDSSClassificationMetric 
 ```
 
-Note: import detectors will raise error
-
-## Algorithms
-Apply classification Algorithms to BinaryLabel Dataset
+```diff
+-Note: import detectors or MDSS metric will raise error
+```
+## 4 Algorithms
+#### 4.1 Apply classification Algorithms to BinaryLabel Dataset
 * preprocessing
 ```python
 from aif360.algorithms.preprocessing import Reweighing
@@ -171,10 +172,29 @@ ROC.fit(dataset_orig, dataset_pred)
 ROC.classification_threshold
 ROC.ROC_margin
 ```
-The ROC method has estimated that the optimal classification threshold and the margin. This means that to mitigate bias, for instances with a predicted_probability between threshold-margin and threshold+margin, if they belong to the unprivileged group, they will be assigned a favorable outcome . However, if they belong to the privileged group, they will be assigned an unfavorable outcome.
 
-## Metric
-- metric for binary label dataset
+```diff
+-Note: import postprocessing.reject_option_classification will raise error
+```
+#### 4.2 Apply Regression Algorithms to Regression Dataset
+```python
+from aif360.algorithms.inprocessing.grid_search_reduction import GridSearchReduction
+from sklearn.linear_model import LinearRegression
+estimator = LinearRegression()
+grid_search_red = GridSearchReduction(prot_attr="attr_name", 
+                                      estimator=estimator, 
+                                      constraints="DemographicParity")
+grid_search_red.fit(X_train, y_train)
+```
+
+#### 4.3 evaluation
+There are 14 algorithms in total, only one can be applied to regression dataset. It is also hard to apply AIF360 to models which are not binary classification; e.g., for regression models, there is not much guidance on if or how the toolkit should be used. <br>
+
+Another problem here is redundent input. In many algorithms, they require input parameters contain dictioanry of privilleged group, unprivilleged group and sensitive attributs. If we apply these algorithms to standard dataset, which already defined what is privilleged group, unprivilleged group and sensitive attributs inside the class, then there will be repeated input. 
+
+
+## 5 Metric
+#### 5.1 metric for binary label dataset
 ```python
 from aif360.metrics import BinaryLabelDatasetMetric
 
@@ -186,7 +206,7 @@ metric = BinaryLabelDatasetMetric(binary_dataset,
                           privileged_groups=privileged_groups)                      
 metric.disparate_impact()
 ```
-- metric for computing based on two BinaryLabelDatasets
+#### 5.2 metric for computing based on two BinaryLabelDatasets
 ```python
 from aif360.metrics import ClassificationMetric
 
@@ -196,7 +216,7 @@ metric = ClassificationMetric(binary_dataset, binary_dataset_pred,
 metric.average_odds_difference()
 metric.accuracy()
 ```
-- metrics for computing based on two StructuredDatasets.
+#### 5.3 metrics for computing based on two StructuredDatasets.
 ```python
 from aif360.metrics.sample_distortion_metric import SampleDistortionMetric
 metric = SampleDistortionMetric(structure_dataset, distorted_dataset,
@@ -205,17 +225,19 @@ metric = SampleDistortionMetric(structure_dataset, distorted_dataset,
 metric.average_euclidean_distance()
 metric.mean_euclidean_distance_difference()
 ```
+
+#### 5.4 evaluation
       
 
 
-## Expainer
+## 6 Expainer
 Class for explaining metric values with text
 ```python
 MetricTextExplainer(metric).disparate_impact()
 ```
 
 
-# Scikit-learn compatible version
+## 7 Scikit-learn compatible version
 The dataset format for aif360.sklearn is a pandas.DataFrame with protected attributes in the index.
 ##### dataset 
 - aif360.sklearn.datasets.standardize_dataset
@@ -260,6 +282,8 @@ rw = Reweighing(["prot_attr_name"])
 rw.fit_transform(x, y)
 ```
 
+## 8 Tutorial Videos&Community
+
 
 ## Problems
 * uncoordinate
@@ -272,8 +296,6 @@ Favorbale class
 privillaged and unprivillaged information needs to be put in both standardDataset and processing algorithm/metric
 
 when using standardDataset, set privillaged and unprivillaged as default would be better
-
-*  Import Error
 
 
 
