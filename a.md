@@ -288,7 +288,7 @@ models, the similarity could help them incorporate toolkits into their current M
 ## 7 Tutorial Videos&Community
 AIF360 provided multiple videos to introduce the literature of machine learning fairness problems, which is great for users who want to use this toolkit to learn more about ML fairness concepts and terminologies. The quality of code presentation part is rather low. As a user to learn a new tooltik, I would like speakers to share screen and write code while spkeaing in the video instead of standing in front of screen and go through jupyter notebooks.
 
-The AI Fairness 360 Community is on Slack
+The AI Fairness 360 Community is on Slack with 1409 members in the channel. There are some specific peoples who will answering coding problem and calrify libarary documentation.
 
 
 ## Conclusion
