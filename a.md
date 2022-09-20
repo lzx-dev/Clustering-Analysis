@@ -227,8 +227,8 @@ metric.mean_euclidean_distance_difference()
 ```
 
 #### 5.4 evaluation
+AIF360 metric also had redundent input problem and there is no metric for regression dataset after prediction.
       
-
 
 ## 6 Expainer
 Class for explaining metric values with text
@@ -236,10 +236,9 @@ Class for explaining metric values with text
 MetricTextExplainer(metric).disparate_impact()
 ```
 
-
 ## 7 Scikit-learn compatible version
 The dataset format for aif360.sklearn is a pandas.DataFrame with protected attributes in the index.
-##### dataset 
+##### 7.1 dataset 
 - aif360.sklearn.datasets.standardize_dataset
 
 separate data, targets, and possibly sample weights and populate protected attributes as sample properties
@@ -260,7 +259,7 @@ x = data[0]
 y = data[1]
 sample_weight = data[2]
 ```
-#### fairness metric
+#### 7.2 fairness metric
 ```python
 #aif360.sklearn.metrics.statistical_parity_difference
 #(y_true, y_pred=None, *, prot_attr=None, priv_group=1, pos_label=1, sample_weight=None)
@@ -274,13 +273,16 @@ statistical_parity_difference(y_true, y_pred)
 
 
 
-#### algorithm
+#### 7.3 algorithm
 ```python
 from aif360.sklearn.preprocessing.reweighing import Rewighing
 ## default input is none, meaning all protected attributes from the dataset are used
 rw = Reweighing(["prot_attr_name"])
 rw.fit_transform(x, y)
 ```
+
+#### 7.4 Evaluation
+
 
 ## 8 Tutorial Videos&Community
 
