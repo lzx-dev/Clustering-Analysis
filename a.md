@@ -95,9 +95,9 @@ ad_binary = BinaryLabelDataset(df= ad_conversion_dataset,
                                favorable_label = 1, unfavorable_label = 0)
 ```
 #### 2.3 Evaluation
-Datasets provided by AIF360 have defined which attributes are protected and what values privileged group or unprivileged group contains, but in the libarary documentation, there is not detailed information about how the data was collected and how the features were being defined. <br>
-Context documents like Datasheets could better scaffold an user’s process of issue discovery, understanding, and
-ethical decision-making around ML training datasets.
+Datasets provided by AIF360 have defined which attributes are protected and what values privileged group or unprivileged group contains, but in the libarary documentation, there is not detailed information about how the data was collected and how the features were being defined. To fix this problem, we can add context documents like Datasheets, which could better scaffold an user’s process of issue discovery, understanding, and ethical decision-making around ML training datasets.   <br>
+
+Uncoordinate problem: In data type initilization, standardDataset label name parameter is string: Name of the label column in df. BinaryLabelDataset label name parameter is (list(str)): Names describing each label.
 
 
 ## 3 Detectors
@@ -271,8 +271,6 @@ statistical_parity_difference(y_true, y_pred)
 
 ```
 
-
-
 #### 7.3 algorithm
 ```python
 from aif360.sklearn.preprocessing.reweighing import Rewighing
@@ -287,17 +285,9 @@ rw.fit_transform(x, y)
 ## 8 Tutorial Videos&Community
 
 
-## Problems
-* uncoordinate
+## Conclusion
 
-In data type initilization, standardDataset label name parameter is string: Name of the label column in df. BinaryLabelDataset label name parameter is (list(str)): Names describing each label.
-Favorbale class
 
-* redundent information input 
-
-privillaged and unprivillaged information needs to be put in both standardDataset and processing algorithm/metric
-
-when using standardDataset, set privillaged and unprivillaged as default would be better
 
 
 
