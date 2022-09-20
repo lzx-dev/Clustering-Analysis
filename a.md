@@ -226,19 +226,20 @@ metric.average_euclidean_distance()
 metric.mean_euclidean_distance_difference()
 ```
 
-#### 5.4 evaluation
-AIF360 metric also had redundent input problem and there is no metric for regression dataset after prediction.
-      
-
-## 6 Expainer
+#### 5.4 metric explainer
 Class for explaining metric values with text
 ```python
 MetricTextExplainer(metric).disparate_impact()
 ```
 
-## 7 Scikit-learn compatible version
+#### 5.5 evaluation
+AIF360 metric also had redundent input problem and there is no metric for regression dataset after prediction.
+      
+
+
+## 6 Scikit-learn compatible version
 The dataset format for aif360.sklearn is a pandas.DataFrame with protected attributes in the index.
-##### 7.1 dataset 
+##### 6.1 dataset 
 - aif360.sklearn.datasets.standardize_dataset
 
 separate data, targets, and possibly sample weights and populate protected attributes as sample properties
@@ -259,7 +260,7 @@ x = data[0]
 y = data[1]
 sample_weight = data[2]
 ```
-#### 7.2 fairness metric
+#### 6.2 fairness metric
 ```python
 #aif360.sklearn.metrics.statistical_parity_difference
 #(y_true, y_pred=None, *, prot_attr=None, priv_group=1, pos_label=1, sample_weight=None)
@@ -271,7 +272,7 @@ statistical_parity_difference(y_true, y_pred)
 
 ```
 
-#### 7.3 algorithm
+#### 6.3 algorithm
 ```python
 from aif360.sklearn.preprocessing.reweighing import Rewighing
 ## default input is none, meaning all protected attributes from the dataset are used
@@ -279,10 +280,15 @@ rw = Reweighing(["prot_attr_name"])
 rw.fit_transform(x, y)
 ```
 
-#### 7.4 Evaluation
+#### 6.4 Evaluation
+Since scikit-learn is many machine learning practioners' go-to library to build and evaluate ML
+models, the similarity could help them incorporate toolkits into their current ML pipeline. However, it seems that Scikit-learn compatible version of AIF360 is not the focues of development. There are only 7 processing algorithms and not all functionality from AIF360 is supported yet.
 
 
-## 8 Tutorial Videos&Community
+## 7 Tutorial Videos&Community
+AIF360 provided multiple videos to introduce the literature of machine learning fairness problems, which is great for users who want to use this toolkit to learn more about ML fairness concepts and terminologies. The quality of code presentation part is rather low. As a user to learn a new tooltik, I would like speakers to share screen and write code while spkeaing in the video instead of standing in front of screen and go through jupyter notebooks.
+
+The AI Fairness 360 Community is on Slack
 
 
 ## Conclusion
